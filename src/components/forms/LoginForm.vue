@@ -2,6 +2,7 @@
 import { useAuthStore } from "@/stores"
 import { ElMessage } from "element-plus"
 import { reactive, ref } from "vue"
+import { onKeyUp } from "@vueuse/core"
 
 // Элемент формы
 const loginFormRef = ref()
@@ -59,6 +60,10 @@ const submitForm = async (formEl) => {
     }
   })
 }
+
+onKeyUp("Enter", (event) => {
+  submitForm(loginFormRef.value)
+})
 </script>
 
 <template>

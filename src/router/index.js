@@ -1,6 +1,7 @@
 import { checkAuth, setLayout } from "@/router/middlewares"
 import HomeView from "@/views/HomeView"
 import LoginView from "@/views/LoginView"
+import UsersView from "@/views/UsersView"
 import { createRouter, createWebHistory } from "vue-router"
 
 const routes = [
@@ -16,6 +17,14 @@ const routes = [
     path: "/home",
     name: "home",
     component: HomeView,
+    meta: {
+      requireAuth: true,
+    },
+  },
+  {
+    path: "/users",
+    name: "users",
+    component: UsersView,
     meta: {
       requireAuth: true,
     },

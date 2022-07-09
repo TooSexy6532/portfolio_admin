@@ -19,13 +19,28 @@ const submitForm = async (loginForm) => {
 </script>
 
 <template>
-  <section
-    class="w-screen h-screen flex items-center justify-center bg-rose-50"
-  >
-    <el-card shadow="always" class="w-96">
-      <template #header> Авторизуйтесь </template>
+  <el-row justify="center" align="middle" class="h-screen p-3">
+    <el-col
+      :md="{ span: 8, offset: 2 }"
+      :xs="{ span: 24, offset: 0 }"
+      class="mb-3"
+    >
+      <div class="flex justify-center items-center">
+        <el-card shadow="always" class="min-w-[300px] w-full max-w-md">
+          <template #header> Авторизуйтесь </template>
 
-      <LoginForm @submit-form="submitForm" />
-    </el-card>
-  </section>
+          <LoginForm @submit-form="submitForm" />
+        </el-card>
+      </div>
+    </el-col>
+
+    <el-col :xl="{ span: 12, pull: 2 }" :md="{ span: 13, pull: 0 }">
+      <div class="max-w-[700px] w-full m-auto block overflow-clip">
+        <img
+          fit="cover"
+          :src="require('../../public/assets/images/rabbit.webp')"
+        />
+      </div>
+    </el-col>
+  </el-row>
 </template>

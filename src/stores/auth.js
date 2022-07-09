@@ -10,7 +10,13 @@ export const useAuthStore = defineStore("auth", {
   }),
 
   actions: {
+    resetErrors() {
+      this.loginErrors = []
+    },
+
     async login(loginForm) {
+      this.resetErrors()
+
       this.isLoading = true
 
       try {
