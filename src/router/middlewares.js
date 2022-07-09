@@ -1,4 +1,4 @@
-import { usePrefsStore } from "../stores"
+import { useAuthStore, usePrefsStore } from "../stores"
 
 export const setLayout = (to, from, next) => {
   const store = usePrefsStore()
@@ -11,16 +11,17 @@ export const setLayout = (to, from, next) => {
 }
 
 export const checkAuth = async (to, from, next) => {
-  return next()
-  // const { isLogedIn } = store.state.auth;
+  const store = useAuthStore()
 
-  // if (isLogedIn || !to.meta.requireAuth) return next();
+  if (store.isAuth || !to.meta.requireAuth) return next()
 
-  // try {
-  //   const user = await store.dispatch("auth/getMe");
-  //   if (user) return next();
-  //   return next({ name: "login" });
-  // } catch (error) {
-  //   return next({ name: "login" });
-  // }
+  try {
+    const user = await store.getMe()
+
+    if (user) return next()
+
+    return next({ name: "login" })
+  } catch (error) {
+    return next({ name: "login" })
+  }
 }

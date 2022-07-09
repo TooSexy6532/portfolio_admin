@@ -17,11 +17,12 @@ export const AuthApi = {
 
   getMe: async () => {
     try {
-      const response = axios({
+      const response = await axios({
         url: "/api/me",
         method: "GET",
       })
 
+      console.log(response)
       return response.data
     } catch (error) {
       throw new Error(error.response?.data?.message)

@@ -1,4 +1,5 @@
 import { checkAuth, setLayout } from "@/router/middlewares"
+import HomeView from "@/views/HomeView"
 import LoginView from "@/views/LoginView"
 import { createRouter, createWebHistory } from "vue-router"
 
@@ -9,6 +10,14 @@ const routes = [
     component: LoginView,
     meta: {
       layout: "SimpleLayout",
+    },
+  },
+  {
+    path: "/home",
+    name: "home",
+    component: HomeView,
+    meta: {
+      requireAuth: true,
     },
   },
 ]

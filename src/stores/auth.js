@@ -4,20 +4,38 @@ export const useAuthStore = defineStore("auth", {
   state: () => ({
     user: null,
     isAuth: false,
+    isLoading: false,
     loginErrors: [],
     loginSuccess: null,
   }),
 
   actions: {
     async login(loginForm) {
+      this.isLoading = true
+
       try {
         const data = await AuthApi.login(loginForm)
 
         this.loginSuccess = data.message
         this.user = data.user
         this.isAuth = true
+        this.isLoading = false
       } catch (error) {
         this.loginErrors.push(error)
+        this.isLoading = false
+      }
+    },
+
+    async getMe() {
+      try {
+        const data = await AuthApi.getMe()
+
+        this.isAuth = data.isAuth
+        this.user = data.user
+
+        return data.user
+      } catch (error) {
+        throw new Error(error)
       }
     },
 
