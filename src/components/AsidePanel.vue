@@ -21,8 +21,8 @@ const isCollapsed = ref(false)
     >
       <el-icon
         :size="24"
-        class="text-main"
-        :class="{ 'text-primary': isCollapsed }"
+        class="!text-main"
+        :class="{ '!text-primary': isCollapsed }"
       >
         <Menu />
       </el-icon>

@@ -6,7 +6,7 @@ const router = useRouter()
 
 <template>
   <el-page-header
-    :icon="ArrowLeft"
+    icon="ArrowLeft"
     title="Назад"
     content="Пользователи"
     @back="router.back"
