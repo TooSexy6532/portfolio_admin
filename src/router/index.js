@@ -1,6 +1,7 @@
 import { checkAuth, setLayout } from "@/router/middlewares"
 import CategoriesView from "@/views/CategoriesView"
 import HomeView from "@/views/HomeView"
+import ImagesView from "@/views/ImagesView"
 import LoginView from "@/views/LoginView"
 import UsersView from "@/views/UsersView"
 import { createRouter, createWebHistory } from "vue-router"
@@ -34,6 +35,14 @@ const routes = [
     path: "/categories",
     name: "categories",
     component: CategoriesView,
+    meta: {
+      requireAuth: true,
+    },
+  },
+  {
+    path: "/images",
+    name: "images",
+    component: ImagesView,
     meta: {
       requireAuth: true,
     },
