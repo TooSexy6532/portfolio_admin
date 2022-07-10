@@ -1,5 +1,6 @@
 <script setup>
 import { ref, toRefs, watch } from "vue"
+import CategoryForm from "../forms/CategoryForm.vue"
 import UserForm from "../forms/UserForm.vue"
 
 const props = defineProps({
@@ -8,7 +9,7 @@ const props = defineProps({
   title: String,
 })
 
-const components = { UserForm }
+const components = { UserForm, CategoryForm }
 
 const { showModal } = toRefs(props)
 

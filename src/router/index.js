@@ -1,4 +1,5 @@
 import { checkAuth, setLayout } from "@/router/middlewares"
+import CategoriesView from "@/views/CategoriesView"
 import HomeView from "@/views/HomeView"
 import LoginView from "@/views/LoginView"
 import UsersView from "@/views/UsersView"
@@ -25,6 +26,14 @@ const routes = [
     path: "/users",
     name: "users",
     component: UsersView,
+    meta: {
+      requireAuth: true,
+    },
+  },
+  {
+    path: "/categories",
+    name: "categories",
+    component: CategoriesView,
     meta: {
       requireAuth: true,
     },

@@ -14,9 +14,9 @@ const isCollapsed = ref(false)
 </script>
 
 <template>
-  <el-aside width="auto">
+  <el-aside width="auto" class="h-screen relative">
     <div
-      class="ml-5 my-5 w-fit flex items-center rounded cursor-pointer"
+      class="ml-5 my-5 w-fit flex items-center rounded cursor-pointer absolute z-10"
       @click="isCollapsed = !isCollapsed"
     >
       <el-icon
@@ -33,6 +33,7 @@ const isCollapsed = ref(false)
       :default-active="currentRoute"
       text-color=""
       :router="true"
+      class="h-full pt-16"
     >
       <el-menu-item
         v-for="item in store.menuItems"

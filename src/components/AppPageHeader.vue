@@ -1,6 +1,10 @@
 <script setup>
 import { useRouter } from "vue-router"
 
+const props = defineProps({
+  title: String,
+})
+
 const router = useRouter()
 </script>
 
@@ -8,7 +12,7 @@ const router = useRouter()
   <el-page-header
     icon="ArrowLeft"
     title="Назад"
-    content="Пользователи"
+    :content="title"
     @back="router.back"
   />
 </template>

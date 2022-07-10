@@ -6,6 +6,7 @@ export const usePrefsStore = defineStore("prefs", {
     menuItems: [
       { name: "home", title: "Главная", icon: "Grid" },
       { name: "users", title: "Пользователи", icon: "Avatar" },
+      { name: "categories", title: "Категории", icon: "Key" },
     ],
   }),
 
