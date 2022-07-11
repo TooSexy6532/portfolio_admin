@@ -14,7 +14,7 @@ const isCollapsed = ref(false)
 </script>
 
 <template>
-  <el-aside width="auto" class="h-screen relative">
+  <el-aside width="auto" class="relative">
     <div
       class="ml-5 my-5 w-fit flex items-center rounded cursor-pointer absolute z-10"
       @click="isCollapsed = !isCollapsed"

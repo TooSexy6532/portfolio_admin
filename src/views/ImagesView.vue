@@ -11,6 +11,7 @@ const init = async () => {
 }
 
 const dialogImageUrl = ref("")
+const link = ref("")
 const dialogVisible = ref(false)
 
 const handleRemove = async (file, uploadFiles) => {
@@ -22,6 +23,7 @@ const handleRemove = async (file, uploadFiles) => {
 const handlePictureCardPreview = (uploadFile) => {
   dialogImageUrl.value = uploadFile.url
   dialogVisible.value = true
+  link.value = uploadFile.fullUrl
 }
 
 init()
@@ -40,7 +42,16 @@ init()
     </el-upload>
   </div>
 
-  <el-dialog v-model="dialogVisible">
-    <img w-full :src="dialogImageUrl" alt="Preview Image" />
+  <el-dialog v-model="dialogVisible" top="5vh" custom-class="max-h-[85vh]">
+    <div class="flex items-center justify-center">
+      <img
+        :src="dialogImageUrl"
+        alt="Preview Image"
+        class="h-auto max-h-[70vh] block"
+      />
+    </div>
+    <div class="flex items-center justify-center text-lg font-medium mt-5">
+      {{ link }}
+    </div>
   </el-dialog>
 </template>

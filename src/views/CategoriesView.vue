@@ -4,7 +4,7 @@ import { ElMessage } from "element-plus"
 import { ref } from "vue"
 import AppPageHeader from "../components/AppPageHeader.vue"
 import AppPagination from "../components/AppPagination.vue"
-import AppFormModal from "../components/modals/AppFormModal.vue"
+import CategoryForm from "../components/forms/CategoryForm.vue"
 
 const store = useCategoriesStore()
 
@@ -56,12 +56,13 @@ const showMessage = (message, type) => {
 <template>
   <AppPageHeader title="Категории" />
 
-  <AppFormModal
-    form="CategoryForm"
+  <el-dialog
+    v-model="showModal"
     title="Создание и редактирование категории"
-    :showModal="showModal"
     @closed="closeModal"
-  />
+  >
+    <CategoryForm @done="closeModal" />
+  </el-dialog>
 
   <el-divider />
 

@@ -1,30 +1,18 @@
 <template>
-  <div class="default-layout">
-    <el-container>
-      <aside-panel />
-      <el-container direction="vertical">
-        <app-header />
-        <el-main>
-          <router-view />
-        </el-main>
-      </el-container>
-    </el-container>
+  <div class="flex flex-row">
+    <aside-panel />
+    <el-scrollbar class="flex flex-col w-full p-8 max-h-screen">
+      <router-view />
+    </el-scrollbar>
   </div>
 </template>
 
 <script>
-import AppHeader from "../components/AppHeader.vue"
 import AsidePanel from "../components/AsidePanel.vue"
 export default {
   name: "DefaultLayout",
-  components: { AsidePanel, AppHeader },
+  components: { AsidePanel },
 }
 </script>
 
-<style lang="scss">
-.default-layout {
-  .el-mail {
-    height: 100%;
-  }
-}
-</style>
+<style lang="scss"></style>

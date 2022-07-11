@@ -3,7 +3,7 @@ import { ElMessage } from "element-plus"
 import { ref } from "vue"
 import AppPageHeader from "../components/AppPageHeader.vue"
 import AppPagination from "../components/AppPagination.vue"
-import AppFormModal from "../components/modals/AppFormModal.vue"
+import UserForm from "../components/forms/UserForm.vue"
 import { useUsersStore } from "../stores"
 
 const showModal = ref(false)
@@ -56,12 +56,13 @@ const showMessage = (message, type) => {
 <template>
   <AppPageHeader title="Пользователи" />
 
-  <AppFormModal
-    form="UserForm"
-    title="Создание и редактирование пользователя"
-    :showModal="showModal"
+  <el-dialog
+    v-model="showModal"
     @closed="closeModal"
-  />
+    title="Создание и редактирование пользователя"
+  >
+    <UserForm @done="closeModal" />
+  </el-dialog>
 
   <el-divider />
 

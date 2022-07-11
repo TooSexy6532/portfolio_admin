@@ -3,10 +3,10 @@
 </template>
 
 <script setup>
-import DefaultLayout from "./layouts/DefaultLayout"
-import SimpleLayout from "./layouts/SimpleLayout"
 import { usePrefsStore } from "@/stores"
 import { storeToRefs } from "pinia"
+import DefaultLayout from "./layouts/DefaultLayout"
+import SimpleLayout from "./layouts/SimpleLayout"
 
 const prefs = usePrefsStore()
 
@@ -22,5 +22,6 @@ const components = {
 #app {
   font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
     "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  overflow: hidden;
 }
 </style>
