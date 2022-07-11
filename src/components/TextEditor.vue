@@ -1,7 +1,11 @@
 <script setup>
+import ImageEdit from "quill-image-edit-module"
+import "quill/dist/quill.core.css"
+import "quill/dist/quill.snow.css"
 import { ref, toRefs } from "vue"
 import { Quill, quillEditor } from "vue3-quill"
-import ImagesModal from "./modals/ImagesModal.vue"
+
+Quill.register("modules/imageEdit", ImageEdit)
 
 const SizeStyle = Quill.import("attributors/style/size")
 
@@ -50,6 +54,9 @@ const insertImage = (image) => {
 
 const editorOption = {
   modules: {
+    imageEdit: {
+      modules: ["Resize", "DisplaySize", "Toolbar", "Delete"],
+    },
     toolbar: {
       container: [
         ["bold", "italic", "underline", "strike"],
