@@ -22,6 +22,9 @@ onBeforeRouteLeave((to, from) => {
 })
 
 const categoriesOptions = computed(() => {
+  if (!categoriesStore.items.length) {
+    return []
+  }
   return categoriesStore.items.map((item) => {
     return {
       value: item._id,
@@ -127,13 +130,11 @@ const setMainImage = (image) => {
     <el-col :span="11">
       Категория проекта:
       <el-select-v2
+        v-if="categoriesOptions?.length"
         v-model="store.model.category"
         :options="categoriesOptions"
         placeholder="Please select"
         style="width: 240px"
-        multiple
-        collapse-tags
-        collapse-tags-tooltip
         clearable
       />
     </el-col>

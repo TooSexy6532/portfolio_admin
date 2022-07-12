@@ -43,7 +43,7 @@ init()
     <el-pagination
       hide-on-single-page
       layout="prev, pager, next"
-      :total="list.length"
+      :total="list?.length"
       :page-size="pageSize"
       v-model:currentPage="currentPage"
     />
