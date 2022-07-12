@@ -35,17 +35,37 @@ const isCollapsed = ref(false)
       :router="true"
       class="h-full pt-16"
     >
-      <el-menu-item
-        v-for="item in store.menuItems"
-        :key="item.name"
-        :index="item.name"
-        :route="{ name: item.name }"
-      >
-        <el-icon>
-          <component :is="item.icon" />
-        </el-icon>
-        <template #title> {{ item.title }}</template>
-      </el-menu-item>
+      <template v-for="item in store.menuItems" :key="item.name">
+        <template v-if="item.type === 'submenu'">
+          <el-sub-menu index="1">
+            <template #title>
+              <el-icon><component :is="item.icon" /></el-icon>
+              <span>{{ item.title }}</span>
+            </template>
+
+            <el-menu-item
+              v-for="subitem in item.submenus"
+              :key="subitem.name"
+              :index="subitem.name"
+              :route="{ name: subitem.name }"
+            >
+              <el-icon>
+                <component :is="subitem.icon" />
+              </el-icon>
+              <template #title> {{ subitem.title }}</template>
+            </el-menu-item>
+          </el-sub-menu>
+        </template>
+
+        <template v-else>
+          <el-menu-item :index="item.name" :route="{ name: item.name }">
+            <el-icon>
+              <component :is="item.icon" />
+            </el-icon>
+            <template #title> {{ item.title }}</template>
+          </el-menu-item>
+        </template>
+      </template>
     </el-menu>
   </el-aside>
 </template>

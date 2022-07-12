@@ -1,8 +1,10 @@
 import { checkAuth, setLayout } from "@/router/middlewares"
 import CategoriesView from "@/views/CategoriesView"
+import CreateProjectView from "@/views/CreateProjectView"
 import HomeView from "@/views/HomeView"
 import ImagesView from "@/views/ImagesView"
 import LoginView from "@/views/LoginView"
+import ProjectsView from "@/views/ProjectsView"
 import UsersView from "@/views/UsersView"
 import { createRouter, createWebHistory } from "vue-router"
 
@@ -43,6 +45,30 @@ const routes = [
     path: "/images",
     name: "images",
     component: ImagesView,
+    meta: {
+      requireAuth: true,
+    },
+  },
+  {
+    path: "/projects",
+    name: "projects",
+    component: ProjectsView,
+    meta: {
+      requireAuth: true,
+    },
+  },
+  {
+    path: "/create-project",
+    name: "create-project",
+    component: CreateProjectView,
+    meta: {
+      requireAuth: true,
+    },
+  },
+  {
+    path: "/edit-project",
+    name: "edit-project",
+    component: CreateProjectView,
     meta: {
       requireAuth: true,
     },

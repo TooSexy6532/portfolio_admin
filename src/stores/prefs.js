@@ -8,6 +8,20 @@ export const usePrefsStore = defineStore("prefs", {
       { name: "users", title: "Пользователи", icon: "Avatar" },
       { name: "categories", title: "Категории", icon: "Key" },
       { name: "images", title: "Изображения", icon: "Picture" },
+      {
+        name: "allprojects",
+        title: "Проекты",
+        icon: "Expand",
+        type: "submenu",
+        submenus: [
+          { name: "projects", title: "Все Проекты", icon: "DocumentCopy" },
+          {
+            name: "create-project",
+            title: "Создать проект",
+            icon: "DocumentAdd",
+          },
+        ],
+      },
     ],
   }),
 

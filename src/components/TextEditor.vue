@@ -4,6 +4,7 @@ import "quill/dist/quill.core.css"
 import "quill/dist/quill.snow.css"
 import { ref, toRefs } from "vue"
 import { Quill, quillEditor } from "vue3-quill"
+import ImagesModal from "./modals/ImagesModal.vue"
 
 Quill.register("modules/imageEdit", ImageEdit)
 
@@ -49,7 +50,8 @@ const imageHandler = (editor) => {
 
 const insertImage = (image) => {
   const { url } = image
-  editor.value.insertEmbed(0, "image", url)
+  const range = editor.value.getSelection()
+  editor.value.insertEmbed(range?.index || 0, "image", url)
 }
 
 const editorOption = {
