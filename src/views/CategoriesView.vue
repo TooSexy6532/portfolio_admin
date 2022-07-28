@@ -72,7 +72,7 @@ const showMessage = (message, type) => {
     </el-button>
   </div>
 
-  <el-table :data="paginatedList.value" style="width: 100%" height="450">
+  <el-table :data="paginatedList.value" style="width: 100%">
     <el-table-column prop="name" label="Название" />
     <el-table-column prop="description" label="Описание" />
     <el-table-column label="Operations">

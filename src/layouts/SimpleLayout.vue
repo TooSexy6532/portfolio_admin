@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: "SimpletLayout",
+  name: "SimpleLayout",
   components: {},
 }
 </script>
