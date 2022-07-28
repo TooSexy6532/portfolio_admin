@@ -1,9 +1,9 @@
 <script setup>
 import { useCategoriesStore } from "@/stores"
 import { onKeyUp } from "@vueuse/core"
-import { ElMessage } from "element-plus"
 import { storeToRefs } from "pinia"
 import { reactive, ref } from "vue"
+
 const store = useCategoriesStore()
 
 const formRef = ref()
@@ -25,31 +25,20 @@ const { model } = storeToRefs(store)
 const submitForm = async (formEl) => {
   if (!formEl) return
 
-  await formEl.validate(async (valid, fields) => {
+  await formEl.validate(async (valid) => {
     if (valid) {
       const data = store.isEditing
         ? await store.updateItem()
         : await store.createItem()
+
       if (!data?.error) {
-        showMessage(data?.message || "Элемент успешно создан", "success")
         emit("done")
-      } else {
-        showMessage(data?.error, "error")
       }
-    } else {
-      return false
     }
   })
 }
 
-const showMessage = (message, type) => {
-  ElMessage({
-    message,
-    type,
-  })
-}
-
-onKeyUp("Enter", (event) => {
+onKeyUp("Enter", () => {
   submitForm(formRef)
 })
 </script>

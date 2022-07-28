@@ -1,16 +1,14 @@
 <script setup>
-import { ElMessage } from "element-plus"
 import { ref } from "vue"
 import AppPageHeader from "../components/AppPageHeader.vue"
 import AppPagination from "../components/AppPagination.vue"
 import UserForm from "../components/forms/UserForm.vue"
-import { useUsersStore } from "../stores"
+import { useUsersStore } from "@/stores"
 
 const showModal = ref(false)
 
 const closeModal = () => {
   store.resetUserModel()
-  store.resetCreateError()
   showModal.value = false
   store.isEditing = false
 }
@@ -36,20 +34,10 @@ const handleEdit = (user) => {
   openModal()
 }
 
-const handleDelete = async (user) => {
-  const { error } = await store.deleteUser(user._id)
-  if (error) {
-    showMessage(error, "error")
-  } else {
-    showMessage("Пользователь успешно удален", "success")
-  }
-}
+const handleChangePassword = () => {}
 
-const showMessage = (message, type) => {
-  ElMessage({
-    message,
-    type,
-  })
+const handleDelete = (user) => {
+  store.deleteUser(user._id)
 }
 </script>
 
@@ -93,7 +81,7 @@ const showMessage = (message, type) => {
           @confirm="handleDelete(scope.row)"
         >
           <template #reference>
-            <el-button size="small" type="danger"> Delete </el-button>
+            <el-button size="small" type="danger"> Delete</el-button>
           </template>
         </el-popconfirm>
       </template>

@@ -1,8 +1,15 @@
-export { useAuthStore } from "./auth"
-export { useCategoriesStore } from "./categories"
-export { useMessagesStore } from "./messages"
-export { usePrefsStore } from "./prefs"
-export { useProjectsStore } from "./projects"
-export { useUsersStore } from "./users"
+import useAuthStore from "./auth"
+import useCategoriesStore from "./categories"
+import useMessagesStore from "./messages"
+import usePrefsStore from "./prefs"
+import useProjectsStore from "./projects"
+import useUsersStore from "./users"
 
-// All stores
+export {
+  useMessagesStore,
+  useCategoriesStore,
+  useAuthStore,
+  usePrefsStore,
+  useProjectsStore,
+  useUsersStore,
+}

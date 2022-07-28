@@ -11,7 +11,7 @@ const submitForm = async (loginForm) => {
   await store.login(loginForm)
 
   if (store.isAuth) {
-    router.push({ name: "home" })
+    await router.push({ name: "home" })
   }
 }
 </script>
@@ -24,9 +24,11 @@ const submitForm = async (loginForm) => {
       class="mb-3"
     >
       <div class="flex justify-center items-center">
-        <el-card shadow="always" class="min-w-[300px] w-full max-w-md">
-          <template #header> Авторизуйтесь </template>
-
+        <el-card
+          shadow="always"
+          class="min-w-[300px] w-full max-w-md"
+          header="Авторизуйтесь"
+        >
           <LoginForm @submit-form="submitForm" />
         </el-card>
       </div>
@@ -35,8 +37,9 @@ const submitForm = async (loginForm) => {
     <el-col :xl="{ span: 12, pull: 2 }" :md="{ span: 13, pull: 0 }">
       <div class="max-w-[700px] w-full m-auto block overflow-clip">
         <img
-          fit="cover"
+          class="object-cover"
           :src="require('../../public/assets/images/rabbit.webp')"
+          alt="rabbit"
         />
       </div>
     </el-col>

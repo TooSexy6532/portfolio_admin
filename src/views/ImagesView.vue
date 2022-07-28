@@ -14,7 +14,7 @@ const dialogImageUrl = ref("")
 const link = ref("")
 const dialogVisible = ref(false)
 
-const handleRemove = async (file, uploadFiles) => {
+const handleRemove = async (file) => {
   const filename = file.name
   const res = await ImagesApi.deleteImage({ filename })
   if (res) return true
@@ -38,7 +38,9 @@ init()
       :on-preview="handlePictureCardPreview"
       :before-remove="handleRemove"
     >
-      <el-icon><Plus /></el-icon>
+      <el-icon>
+        <Plus />
+      </el-icon>
     </el-upload>
   </div>
 

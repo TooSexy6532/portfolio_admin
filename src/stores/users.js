@@ -1,7 +1,8 @@
 import { UsersApi } from "@/api"
 import { defineStore } from "pinia"
+import { useMessagesStore } from "@/stores/index"
 
-export const useUsersStore = defineStore("users", {
+export default defineStore("users", {
   state: () => ({
     userModel: {
       email: "",
@@ -13,11 +14,14 @@ export const useUsersStore = defineStore("users", {
     isCreateUser: false,
     isEditing: false,
     users: [],
-    error: null,
-    createError: null,
   }),
 
   actions: {
+    setMessage({ message, status }) {
+      const messageStore = useMessagesStore()
+      messageStore.setMessage({ message, status })
+    },
+
     resetUserModel() {
       this.userModel = {
         email: "",
@@ -27,35 +31,34 @@ export const useUsersStore = defineStore("users", {
       }
     },
 
-    resetCreateError() {
-      this.createError = null
-    },
-
     setUserModel(model) {
       this.userModel = model
     },
 
     async getUsers() {
       try {
-        this.isCreateUser ? null : (this.isLoadingUsers = true)
+        if (this.isCreateUser) {
+          this.isLoadingUsers = true
+        }
 
-        const users = await UsersApi.getUsers()
+        const { users } = await UsersApi.getUsers()
 
         this.users = users
 
         this.isLoadingUsers = false
       } catch (error) {
-        this.error = error
+        this.setMessage({ message: error.message, status: "error" })
         this.isLoadingUsers = false
       }
     },
 
     async createUser() {
-      this.resetCreateError()
       this.isCreateUser = true
 
       try {
-        await UsersApi.createUser(this.userModel)
+        const { message } = await UsersApi.createUser(this.userModel)
+
+        if (message) this.setMessage({ message, status: "success" })
 
         await this.getUsers()
 
@@ -64,42 +67,44 @@ export const useUsersStore = defineStore("users", {
         this.resetUserModel()
         return { error: null }
       } catch (error) {
-        this.createError = error
+        this.setMessage({ message: error.message, status: "error" })
         this.isCreateUser = false
-        return { error }
       }
     },
 
     async updateUser() {
-      this.resetCreateError()
       this.isCreateUser = true
 
       try {
         const { message } = await UsersApi.updateUser(this.userModel)
+
+        if (message) this.setMessage({ message, status: "success" })
 
         await this.getUsers()
 
         this.isCreateUser = false
 
         this.resetUserModel()
-        return { error: null, message }
+        return { error: null }
       } catch (error) {
-        this.createError = error
+        this.setMessage({ message: error.message, status: "error" })
         this.isCreateUser = false
-        return { error }
       }
     },
 
     async deleteUser(_id) {
       this.isCreateUser = true
       try {
-        await UsersApi.deleteUser({ _id })
+        const { message } = await UsersApi.deleteUser({ _id })
+
+        if (message) this.setMessage({ message, status: "success" })
+
         await this.getUsers()
+
         this.isCreateUser = false
-        return { error: null }
       } catch (error) {
+        this.setMessage({ message: error.message, status: "error" })
         this.isCreateUser = false
-        return { error }
       }
     },
   },

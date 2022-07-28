@@ -1,10 +1,9 @@
 <script setup>
 import { useUsersStore } from "@/stores"
 import { onKeyUp } from "@vueuse/core"
-import { ElMessage } from "element-plus"
 import { storeToRefs } from "pinia"
 import { reactive, ref } from "vue"
-// Элемент формы
+
 const store = useUsersStore()
 
 const formRef = ref()
@@ -30,7 +29,9 @@ const formRules = reactive({
       trigger: ["blur"],
     },
   ],
+
   password: store.isEditing ? null : passwordRule,
+
   role: [
     {
       required: true,
@@ -47,31 +48,19 @@ const { userModel } = storeToRefs(store)
 const submitForm = async (formEl) => {
   if (!formEl) return
 
-  await formEl.validate(async (valid, fields) => {
+  await formEl.validate(async (valid) => {
     if (valid) {
-      const { error, message } = store.isEditing
+      const { error } = store.isEditing
         ? await store.updateUser()
         : await store.createUser()
       if (!error) {
-        showMessage(message || "Пользователь успешно создан", "success")
         emit("done")
-      } else {
-        showMessage(error, "error")
       }
-    } else {
-      return false
     }
   })
 }
 
-const showMessage = (message, type) => {
-  ElMessage({
-    message,
-    type,
-  })
-}
-
-onKeyUp("Enter", (event) => {
+onKeyUp("Enter", () => {
   submitForm(formRef)
 })
 

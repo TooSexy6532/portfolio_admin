@@ -13,14 +13,15 @@ export const setLayout = (to, from, next) => {
 export const checkAuth = async (to, from, next) => {
   const store = useAuthStore()
 
-  if (store.isAuth || !to.meta.requireAuth) return next()
+  if (store.isAuth || !to.meta.requireAuth) {
+    if (to.name === "login") return next({ name: "home" })
+    else return next()
+  }
 
   try {
-    const user = await store.getMe()
-
-    if (user) return next()
-
-    return next({ name: "login" })
+    const { isAuth } = await store.getMe()
+    if (!isAuth) return next({ name: "login" })
+    else return next()
   } catch (error) {
     return next({ name: "login" })
   }

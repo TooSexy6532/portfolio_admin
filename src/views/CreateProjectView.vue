@@ -17,7 +17,7 @@ if (route.name === "edit-project" && !store.model._id) {
   router.push({ name: "projects" })
 }
 
-onBeforeRouteLeave((to, from) => {
+onBeforeRouteLeave(() => {
   store.resetModel()
 })
 
@@ -38,7 +38,7 @@ const submit = async () => {
     try {
       await store.createItem()
 
-      router.push({ name: "projects" })
+      await router.push({ name: "projects" })
     } catch (error) {
       console.log(error)
     }
@@ -46,7 +46,7 @@ const submit = async () => {
     try {
       await store.updateItem()
 
-      router.push({ name: "projects" })
+      await router.push({ name: "projects" })
     } catch (error) {
       console.log(error)
     }

@@ -1,7 +1,8 @@
 import { CategoriesApi } from "@/api"
 import { defineStore } from "pinia"
+import { useMessagesStore } from "@/stores/index"
 
-export const useCategoriesStore = defineStore("categories", {
+export default defineStore("categories", {
   state: () => ({
     model: {
       name: "",
@@ -11,19 +12,20 @@ export const useCategoriesStore = defineStore("categories", {
     isCreateItem: false,
     isEditing: false,
     items: [],
-    error: null,
   }),
 
   actions: {
+    setMessage({ message, status }) {
+      const messageStore = useMessagesStore()
+
+      messageStore.setMessage({ message, status })
+    },
+
     resetModel() {
       this.model = {
         name: "",
         description: "",
       }
-    },
-
-    resetError() {
-      this.error = null
     },
 
     setModel(model) {
@@ -32,7 +34,9 @@ export const useCategoriesStore = defineStore("categories", {
 
     async getItems() {
       try {
-        this.isCreateItem ? null : (this.isLoadingItems = true)
+        if (!this.isCreateItem) {
+          this.isLoadingItems = true
+        }
 
         const { categories } = await CategoriesApi.getCategories()
 
@@ -40,61 +44,60 @@ export const useCategoriesStore = defineStore("categories", {
 
         this.isLoadingItems = false
       } catch (error) {
-        this.error = error
         this.isLoadingItems = false
       }
     },
 
     async createItem() {
-      this.resetError()
       this.isCreateItem = true
 
       try {
-        await CategoriesApi.createCategory(this.model)
+        const { message } = await CategoriesApi.createCategory(this.model)
+        if (message) this.setMessage({ message, status: "success" })
 
         await this.getItems()
 
         this.isCreateItem = false
 
         this.resetModel()
-        return
       } catch (error) {
-        this.error = error
+        this.setMessage({ message: error.message, status: "error" })
         this.isCreateItem = false
-        return { error }
       }
     },
 
     async updateItem() {
-      this.resetError()
       this.isCreateItem = true
 
       try {
         const { message } = await CategoriesApi.updateCategory(this.model)
 
+        if (message) this.setMessage({ message, status: "success" })
+
         await this.getItems()
 
         this.isCreateItem = false
 
         this.resetModel()
-        return { message }
       } catch (error) {
-        this.error = error
+        this.setMessage({ message: error, status: "error" })
         this.isCreateItem = false
-        return { error }
       }
     },
 
     async deleteItem(_id) {
       this.isCreateItem = true
       try {
-        await CategoriesApi.deleteCategory({ _id })
+        const { message } = await CategoriesApi.deleteCategory({ _id })
+
+        if (message) this.setMessage({ message, status: "success" })
+
         await this.getItems()
+
         this.isCreateItem = false
-        return { error: null }
       } catch (error) {
+        this.setMessage({ message: error, status: "error" })
         this.isCreateItem = false
-        return { error }
       }
     },
   },

@@ -1,6 +1,6 @@
 import { defineStore } from "pinia"
 
-export const usePrefsStore = defineStore("prefs", {
+export default defineStore("prefs", {
   state: () => ({
     layout: "DefaultLayout",
     menuItems: [

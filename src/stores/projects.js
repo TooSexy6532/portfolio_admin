@@ -1,7 +1,7 @@
 import { ProjectsApi } from "@/api"
 import { defineStore } from "pinia"
 
-export const useProjectsStore = defineStore("projects", {
+export default defineStore("projects", {
   state: () => ({
     model: {
       title: "",
