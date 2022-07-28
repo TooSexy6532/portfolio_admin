@@ -1,33 +1,30 @@
 import { AuthApi } from "@/api"
 import { defineStore } from "pinia"
+import { useMessagesStore } from "./messages"
 export const useAuthStore = defineStore("auth", {
   state: () => ({
     user: null,
     isAuth: false,
     isLoading: false,
-    loginErrors: [],
-    loginSuccess: null,
   }),
 
   actions: {
-    resetErrors() {
-      this.loginErrors = []
-    },
-
     async login(loginForm) {
-      this.resetErrors()
-
       this.isLoading = true
+
+      const message = useMessagesStore()
 
       try {
         const data = await AuthApi.login(loginForm)
 
-        this.loginSuccess = data.message
+        message.setMessage({ message: data.message, status: "success" })
+
         this.user = data.user
         this.isAuth = true
         this.isLoading = false
       } catch (error) {
-        this.loginErrors.push(error)
+        message.setMessage({ message: error.message, status: "error" })
+
         this.isLoading = false
       }
     },

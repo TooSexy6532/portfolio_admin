@@ -1,19 +1,15 @@
 <script setup>
 import { useAuthStore } from "@/stores"
-import { ElMessage } from "element-plus"
-import { reactive, ref } from "vue"
 import { onKeyUp } from "@vueuse/core"
+import { reactive, ref } from "vue"
 
-// Элемент формы
 const loginFormRef = ref()
 
-// Модель формы
 const loginForm = reactive({
   email: "",
   password: "",
 })
 
-// Правила валидации
 const loginFormRules = reactive({
   email: [
     {
@@ -23,32 +19,23 @@ const loginFormRules = reactive({
     },
     {
       type: "email",
-      message: "Вы ввели неккоректный email",
+      message: "Вы ввели некорректный email",
       trigger: ["blur", "change"],
     },
   ],
   password: [
     {
       required: true,
-      message: "Ввежите пароль",
+      message: "Введите пароль",
       trigger: "blur",
     },
   ],
 })
 
-// Подключаем стор аутентификации
 const store = useAuthStore()
 
-const successMessage = () => {
-  ElMessage({
-    message: store.loginSuccess,
-    type: "success",
-  })
-}
-// Регистрация событий компонента
 const emit = defineEmits(["submitForm"])
 
-// Валидация и эмит сабмита
 const submitForm = async (formEl) => {
   if (!formEl) return
 
@@ -82,15 +69,6 @@ onKeyUp("Enter", (event) => {
       <el-input v-model="loginForm.password" />
     </el-form-item>
   </el-form>
-
-  <template v-if="store.loginErrors.length">
-    <el-alert
-      v-for="error in store.loginErrors"
-      :key="error"
-      :title="error"
-      type="error"
-    />
-  </template>
 
   <el-button
     :loading="store.isLoading"

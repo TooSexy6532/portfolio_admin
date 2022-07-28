@@ -1,22 +1,13 @@
-<template>
-  <component :is="components[layout]"></component>
-</template>
-
 <script setup>
-import { usePrefsStore } from "@/stores"
-import { storeToRefs } from "pinia"
-import DefaultLayout from "./layouts/DefaultLayout"
-import SimpleLayout from "./layouts/SimpleLayout"
+import AppLayout from "./components/AppLayout.vue"
+import { useMessage } from "./composables/message"
 
-const prefs = usePrefsStore()
-
-const { layout } = storeToRefs(prefs)
-
-const components = {
-  DefaultLayout,
-  SimpleLayout,
-}
+useMessage()
 </script>
+
+<template>
+  <AppLayout />
+</template>
 
 <style>
 #app {

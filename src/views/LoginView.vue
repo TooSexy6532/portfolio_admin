@@ -3,12 +3,10 @@ import LoginForm from "@/components/forms/LoginForm.vue"
 import { useAuthStore } from "@/stores"
 import { useRouter } from "vue-router"
 
-// Подключаем стор
 const store = useAuthStore()
 
 const router = useRouter()
 
-// Oтправка формы на сервер
 const submitForm = async (loginForm) => {
   await store.login(loginForm)
 
