@@ -1,9 +1,9 @@
 <script setup>
+import { useUsersStore } from "@/stores"
 import { ref } from "vue"
 import AppPageHeader from "../components/AppPageHeader.vue"
 import AppPagination from "../components/AppPagination.vue"
 import UserForm from "../components/forms/UserForm.vue"
-import { useUsersStore } from "@/stores"
 
 const showModal = ref(false)
 
@@ -60,7 +60,7 @@ const handleDelete = (user) => {
     </el-button>
   </div>
 
-  <el-table :data="paginatedList.value" style="width: 100%" height="450">
+  <el-table :data="paginatedList.value" style="width: auto">
     <el-table-column prop="firstname" label="Имя" />
     <el-table-column prop="email" label="Email" />
     <el-table-column prop="role" label="Роль" />

@@ -1,6 +1,7 @@
 import axios from "@/api/axios"
 
 export const CategoriesApi = {
+  /* Получение категорий из базы данных*/
   getCategories: async (params) => {
     try {
       const response = await axios({
@@ -15,6 +16,7 @@ export const CategoriesApi = {
     }
   },
 
+  /* Функция, которая используется для получения категории из базы данных. */
   getCategory: async (params) => {
     try {
       const response = await axios({
@@ -29,6 +31,7 @@ export const CategoriesApi = {
     }
   },
 
+  /* Создание новой категории. */
   createCategory: async (data) => {
     try {
       const response = await axios({
@@ -43,6 +46,7 @@ export const CategoriesApi = {
     }
   },
 
+  /* Обновление категории. */
   updateCategory: async (data) => {
     try {
       const response = await axios({
@@ -57,6 +61,7 @@ export const CategoriesApi = {
     }
   },
 
+  /* Удаление категории. */
   deleteCategory: async (data) => {
     try {
       const response = await axios({

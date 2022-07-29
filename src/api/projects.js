@@ -1,6 +1,7 @@
 import axios from "@/api/axios"
 
 export const ProjectsApi = {
+  /* Получение проектов */
   getProjects: async (params) => {
     try {
       const response = await axios({
@@ -15,6 +16,7 @@ export const ProjectsApi = {
     }
   },
 
+  /* Получение проекта */
   getProject: async (params) => {
     try {
       const response = await axios({
@@ -29,6 +31,7 @@ export const ProjectsApi = {
     }
   },
 
+  /* Создание нового проекта. */
   createProject: async (data) => {
     try {
       const response = await axios({
@@ -43,6 +46,7 @@ export const ProjectsApi = {
     }
   },
 
+  /* Обновление проекта. */
   updateProject: async (data) => {
     try {
       const response = await axios({
@@ -57,6 +61,7 @@ export const ProjectsApi = {
     }
   },
 
+  /* Удаление проекта. */
   deleteProject: async (data) => {
     try {
       const response = await axios({

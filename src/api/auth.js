@@ -1,6 +1,7 @@
 import axios from "@/api/axios"
 
 export const AuthApi = {
+  /* Функция, которая используется для входа пользователя. */
   login: async (data) => {
     try {
       const response = await axios({
@@ -15,6 +16,7 @@ export const AuthApi = {
     }
   },
 
+  /* Получение данных пользователя. */
   getMe: async () => {
     try {
       const response = await axios({
@@ -28,6 +30,7 @@ export const AuthApi = {
     }
   },
 
+  /* Функция, которая используется для выхода пользователя из системы. */
   logout: async (data) => {
     try {
       const response = await axios({

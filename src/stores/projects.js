@@ -1,5 +1,6 @@
 import { ProjectsApi } from "@/api"
 import { defineStore } from "pinia"
+import { useMessagesStore } from "."
 
 export default defineStore("projects", {
   state: () => ({
@@ -16,21 +17,25 @@ export default defineStore("projects", {
     isLoadingItems: false,
     isCreateItem: false,
     items: [],
-    error: null,
   }),
 
   actions: {
+    setMessage({ message, status }) {
+      const messageStore = useMessagesStore()
+      messageStore.setMessage({ message, status })
+    },
+
     resetModel() {
       this.model = {
         title: "",
         description: "",
         alias: "",
         content: "",
+        previewImage: "",
+        heroImage: "",
+        showOnMainPage: "",
+        category: "",
       }
-    },
-
-    resetError() {
-      this.error = null
     },
 
     setModel(model) {
@@ -47,54 +52,58 @@ export default defineStore("projects", {
 
         this.isLoadingItems = false
       } catch (error) {
-        this.error = error
+        this.setMessage({ message: error.message, status: "error" })
         this.isLoadingItems = false
       }
     },
 
     async createItem() {
-      this.resetError()
       this.isCreateItem = true
 
       try {
         const { message } = await ProjectsApi.createProject(this.model)
 
+        if (message) this.setMessage({ message, status: "success" })
+
         this.isCreateItem = false
 
         this.resetModel()
-        return { message }
+
+        return true
       } catch (error) {
-        this.error = error
+        this.setMessage({ message: error.message, status: "error" })
         this.isCreateItem = false
-        return { error }
       }
     },
 
     async updateItem() {
-      this.resetError()
       this.isCreateItem = true
 
       try {
         const { message } = await ProjectsApi.updateProject(this.model)
 
+        if (message) this.setMessage({ message, status: "success" })
+
         this.isCreateItem = false
 
         this.resetModel()
-        return { message }
+
+        return true
       } catch (error) {
-        this.error = error
+        this.setMessage({ message: error.message, status: "error" })
         this.isCreateItem = false
-        return { error }
       }
     },
 
     async deleteItem(_id) {
       try {
         const { message } = await ProjectsApi.deleteProject({ _id })
+
+        if (message) this.setMessage({ message, status: "success" })
+
         await this.getItems()
-        return { message }
       } catch (error) {
-        return { error }
+        this.setMessage({ message: error.message, status: "error" })
       }
     },
   },

@@ -1,6 +1,7 @@
 import axios from "@/api/axios"
 
 export const UsersApi = {
+  /* Получение пользователей. */
   getUsers: async () => {
     try {
       const response = await axios({
@@ -14,6 +15,7 @@ export const UsersApi = {
     }
   },
 
+  /* Создание нового пользователя. */
   createUser: async (data) => {
     try {
       const response = await axios({
@@ -28,6 +30,7 @@ export const UsersApi = {
     }
   },
 
+  /* Обновление пользователя. */
   updateUser: async (data) => {
     try {
       const response = await axios({
@@ -42,6 +45,7 @@ export const UsersApi = {
     }
   },
 
+  /* Удаление пользователя. */
   deleteUser: async (data) => {
     try {
       const response = await axios({

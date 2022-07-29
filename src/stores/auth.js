@@ -1,6 +1,6 @@
 import { AuthApi } from "@/api"
-import { defineStore } from "pinia"
 import { useMessagesStore } from "@/stores/index"
+import { defineStore } from "pinia"
 
 export default defineStore("auth", {
   state: () => ({
@@ -31,19 +31,12 @@ export default defineStore("auth", {
     },
 
     async getMe() {
-      const messageStore = useMessagesStore()
+      const { user, isAuth } = await AuthApi.getMe()
 
-      try {
-        const { user, isAuth } = await AuthApi.getMe()
+      this.isAuth = isAuth
+      this.user = user
 
-        this.isAuth = isAuth
-        this.user = user
-
-        return { user, isAuth }
-      } catch (error) {
-        messageStore.setMessage({ message: error.message, status: "error" })
-        throw new Error(error)
-      }
+      return { user, isAuth }
     },
 
     // logout() {

@@ -23,8 +23,8 @@ const handleEdit = (item) => {
   router.push({ name: "edit-project" })
 }
 
-const handleDelete = async (user) => {
-  const data = await store.deleteItem(user._id)
+const handleDelete = (user) => {
+  store.deleteItem(user._id)
 }
 </script>
 

@@ -1,6 +1,7 @@
 import axios from "@/api/axios"
 
 export const PreferencesApi = {
+  /* Получение настроек. */
   getPreferences: async () => {
     try {
       const response = await axios({
@@ -14,6 +15,7 @@ export const PreferencesApi = {
     }
   },
 
+  /* Обновление настроек. */
   updatePreferences: async (data) => {
     try {
       const response = await axios({
