@@ -5,6 +5,7 @@ import { ref } from "vue"
 const list = ref([])
 
 const emit = defineEmits(["setImage"])
+
 async function init() {
   const { images } = await ImagesApi.getImages()
 

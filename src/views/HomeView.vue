@@ -4,22 +4,33 @@ import { ref } from "vue"
 import AppPageHeader from "../components/AppPageHeader.vue"
 import ImagesModal from "../components/modals/ImagesModal.vue"
 import TextEditor from "../components/TextEditor.vue"
+import { useMessagesStore } from "../stores"
+
+const messageStore = useMessagesStore()
 
 const prefs = ref(null)
 
 async function init() {
   const data = await PreferencesApi.getPreferences()
+
   prefs.value = data.preferences
 }
 
-const isUpadating = ref(false)
+const isUpdating = ref(false)
 
 async function updatePrefs() {
-  isUpadating.value = true
-  const { message } = await PreferencesApi.updatePreferences({
-    ...prefs.value,
-  })
-  isUpadating.value = false
+  isUpdating.value = true
+  try {
+    const { message } = await PreferencesApi.updatePreferences({
+      ...prefs.value,
+    })
+    if (message) messageStore.setMessage({ message, status: "success" })
+
+    isUpdating.value = false
+  } catch (error) {
+    messageStore.setMessage({ message: error.message, status: "error" })
+    isUpdating.value = false
+  }
 }
 
 init()
@@ -82,7 +93,7 @@ const setMainImage = (image) => {
       <h2 class="font-semibold mb-5">Текст на странице обо мне</h2>
       <TextEditor v-model:content="prefs.aboutContent" />
       <el-button
-        :loading="isUpadating"
+        :loading="isUpdating"
         type="success"
         class="mt-5"
         @click="updatePrefs()"
