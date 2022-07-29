@@ -1,7 +1,7 @@
 <script setup>
 import { useCategoriesStore, useProjectsStore } from "@/stores"
 import { storeToRefs } from "pinia"
-import { computed, ref } from "vue"
+import { computed, reactive, ref } from "vue"
 import ImagesModal from "../modals/ImagesModal.vue"
 import TextEditor from "../TextEditor.vue"
 
@@ -28,7 +28,33 @@ const categoriesOptions = computed(() => {
   })
 })
 
+const form = ref()
+
 const { model } = storeToRefs(projectStore)
+
+const rules = reactive({
+  title: [
+    {
+      required: true,
+      message: "Введите заголовок",
+      trigger: "blur",
+    },
+  ],
+  alias: [
+    {
+      required: true,
+      message: "Введите alias. Помните, он должен быть уникальным",
+      trigger: "blur",
+    },
+  ],
+  category: [
+    {
+      required: true,
+      message: "Выберите категорию проекта",
+      trigger: "blur",
+    },
+  ],
+})
 
 const showSetImageModal = ref(false)
 
@@ -48,6 +74,18 @@ const setMainImage = (image) => {
   projectStore.model[setImageType.value] = image.url
   closeSetImageModal()
 }
+
+const submitForm = async (formEl) => {
+  if (!formEl) return
+
+  await formEl.validate(async (valid) => {
+    if (valid) {
+      emit("submitForm")
+    } else {
+      return false
+    }
+  })
+}
 </script>
 
 <template>
@@ -56,10 +94,11 @@ const setMainImage = (image) => {
   </el-dialog>
 
   <el-form
-    ref="loginFormRef"
+    ref="form"
     label-position="top"
     label-width="100px"
     :model="model"
+    :rules="rules"
   >
     <el-row class="">
       <el-col :span="11">
@@ -139,7 +178,7 @@ const setMainImage = (image) => {
     </el-row>
   </el-form>
 
-  <el-button type="success" class="mt-5" @click="emit('submitForm')">
+  <el-button type="success" class="mt-5" @click="submitForm(form)">
     {{ buttonTitle }}
   </el-button>
 </template>
